@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>云梯 CLOUD LADDER</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<meta name="description" content="踩云向上跳的极简线条小游戏：每朵云只能踩一次，踩到就自动弹起。">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="云梯">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAACgUlEQVR42u3dQW7CQAxAUR+hlXr/IyJ11127roRUkc54bOct/gaCAOctQgZCvL1/fEtTCkMQ0BLQEtAS0AJaAloCWgJaAlpAS0BLQEtAS0ALaAloCWgJaAloAS0BLQEtAS0BLaAloCWgJaAloAW0BLQEtAS0BLSAloCWgJaAFtAGIaAloCWgJaAFtAS0BLQEtAS0gJaAloCWgJaAFtAS0BLQEtAS0AJaAloCWgJaAlpA61mPz68/W/k4AX0E8QrQcANdCvJK0GADfRzyDtBgA30U8y7QUAOdDnk3aLCBTsecARpqoNMwZ4GGGugUZJmgoQZ6O7Bs0FADvRXXCdB3Rx0wzwN9Z9QB8xlUUAPd/lDDoQfQYzFDDfQ4zFAD3e4UXffXBTTMv57v1duhBrr0auDV+4AGuuRqYBXQd0EN9OaFk//eD/QNQWcsUlxdBVy1DdDDQZ9C/CrC1ds5xTcI9GnEV/Dt2hbuxqCrQL6Cbvf2cDcD3Rlz5mPALg66EmT1QR0waxLsgFmTUAfMmoQ6YNYk1AGzJqEOmAU00CqKOmDWJNRAC2iYVRU10AIaZlVFDbSABlpAwww10AIaaAENtIAGWkDbyVADLaCBFtBAC2ig5UOhgAZaQAMtoIEW0FDL96EFNNAC2o9k5UeyQAtoqOXKSQLaxRoFM9ByOV2oBTTUQAMtoIEW0EALaKAFNNBA+6/vo9g7zOPEnLrMIOyw/pB3zarj+w47bH53mknYYZpUGIKAloCWgJaAFtAS0BLQEtAS0AJaAloCWgJaAlpAS0BLQEtAS0ALaAloCWgJaAloAS0BLQEtAS0BLaAloCWgJaAloAW0BLQEtAS0gDYIjekHyVFe6OQmq74AAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAACgUlEQVR42u3dQW7CQAxAUR+hlXr/IyJ11127roRUkc54bOct/gaCAOctQgZCvL1/fEtTCkMQ0BLQEtAS0AJaAloCWgJaAlpAS0BLQEtAS0ALaAloCWgJaAloAS0BLQEtAS0BLaAloCWgJaAloAW0BLQEtAS0BLSAloCWgJaAFtAGIaAloCWgJaAFtAS0BLQEtAS0gJaAloCWgJaAFtAS0BLQEtAS0AJaAloCWgJaAlpA61mPz68/W/k4AX0E8QrQcANdCvJK0GADfRzyDtBgA30U8y7QUAOdDnk3aLCBTsecARpqoNMwZ4GGGugUZJmgoQZ6O7Bs0FADvRXXCdB3Rx0wzwN9Z9QB8xlUUAPd/lDDoQfQYzFDDfQ4zFAD3e4UXffXBTTMv57v1duhBrr0auDV+4AGuuRqYBXQd0EN9OaFk//eD/QNQWcsUlxdBVy1DdDDQZ9C/CrC1ds5xTcI9GnEV/Dt2hbuxqCrQL6Cbvf2cDcD3Rlz5mPALg66EmT1QR0waxLsgFmTUAfMmoQ6YNYk1AGzJqEOmAU00CqKOmDWJNRAC2iYVRU10AIaZlVFDbSABlpAwww10AIaaAENtIAGWkDbyVADLaCBFtBAC2ig5UOhgAZaQAMtoIEW0FDL96EFNNAC2o9k5UeyQAtoqOXKSQLaxRoFM9ByOV2oBTTUQAMtoIEW0EALaKAFNNBA+6/vo9g7zOPEnLrMIOyw/pB3zarj+w47bH53mknYYZpUGIKAloCWgJaAFtAS0BLQEtAS0AJaAloCWgJaAlpAS0BLQEtAS0ALaAloCWgJaAloAS0BLQEtAS0BLaAloCWgJaAloAW0BLQEtAS0gDYIjekHyVFe6OQmq74AAAAASUVORK5CYII=">
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: #0b0c0e;
+    touch-action: none; overscroll-behavior: none;
+    -webkit-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  body {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  canvas { display: block; touch-action: none; }
+</style>
+</head>
+<body>
+<canvas id="game" width="480" height="640"></canvas>
+<script>
+// ============================================================
+//  CLOUD LADDER 云梯 — 核心逻辑（手机版）
+//  物理 / 云生成 / 踩云判定 / 相机，全部与桌面版同一套参数。
+//
+//  这个文件同时给浏览器和 Node 用：
+//    浏览器  → window.CloudEngine
+//    Node    → require('./engine.js')
+//  这样自检脚本验证的就是真正跑在手机上的那份代码，而不是复制品。
+// ============================================================
+(function (root, factory) {
+    if (typeof module === 'object' && module.exports) module.exports = factory();
+    else root.CloudEngine = factory();
+}(typeof self !== 'undefined' ? self : this, function () {
+    'use strict';
+
+    // ========================================================
+    //  物理常量：跳跃高度与云间距都以这里为准
+    //  Gravity / JumpV 可以在设置里改
+    // ========================================================
+    var PHYS = {
+        ViewW: 480,
+        ViewH: 640,
+
+        Gravity: 1300,          // px/s^2
+        JumpV: 680,             // 起跳初速 px/s
+        GravityDefault: 1300, JumpVDefault: 680,
+        GravityMin: 800, GravityMax: 2200, GravityStep: 50,
+        JumpVMin: 600, JumpVMax: 900, JumpVStep: 20,
+
+        MaxRun: 260,
+        GroundAccel: 2000,
+        AirAccel: 1450,
+        Friction: 2600,
+        AirDrag: 520,
+
+        PlayerW: 20,
+        PlayerH: 30,
+        CloudH: 15,
+
+        Coyote: 0.10,           // 离开云后仍可起跳的宽限
+        JumpBuffer: 0.12,       // 落地前按跳的缓存
+
+        PixelsPerMeter: 32,
+
+        Fixed: 1 / 240,         // 物理固定步长
+        MaxFall: 1500,
+        RingMax: 0.30,          // 踩云扩散环时长
+        MaxDt: 0.25
+    };
+
+    PHYS.maxJumpH = function () { return PHYS.JumpV * PHYS.JumpV / (2 * PHYS.Gravity); };
+    PHYS.airTime = function () { return 2 * PHYS.JumpV / PHYS.Gravity; };
+
+    /** 跳跃后“上升”到 dy 高度所需的最早时间；跳不到返回 -1 */
+    PHYS.riseTime = function (dy) {
+        var d = PHYS.JumpV * PHYS.JumpV - 2 * PHYS.Gravity * dy;
+        return d < 0 ? -1 : (PHYS.JumpV - Math.sqrt(d)) / PHYS.Gravity;
+    };
+    /** 跳跃后“落回” dy 高度所需的最晚时间 */
+    PHYS.fallTime = function (dy) {
+        var d = PHYS.JumpV * PHYS.JumpV - 2 * PHYS.Gravity * dy;
+        return d < 0 ? -1 : (PHYS.JumpV + Math.sqrt(d)) / PHYS.Gravity;
+    };
+    /** 从起跳点能落到 dy 高度处的最大水平距离 */
+    PHYS.maxReach = function (dy) {
+        var t = PHYS.fallTime(dy);
+        return t < 0 ? -1 : t * PHYS.MaxRun * 0.90;
+    };
+
+    PHYS.clamp = function (v, a, b) { return v < a ? a : (v > b ? b : v); };
+    PHYS.lerp = function (a, b, t) { return a + (b - a) * t; };
+    /** 屏幕水平环绕 */
+    PHYS.wrap = function (x) { x = x % PHYS.ViewW; if (x < 0) x += PHYS.ViewW; return x; };
+    /** 环绕坐标下的最短水平位移 */
+    PHYS.wrapDelta = function (d) {
+        d = d % PHYS.ViewW;
+        if (d > PHYS.ViewW * 0.5) d -= PHYS.ViewW;
+        else if (d < -PHYS.ViewW * 0.5) d += PHYS.ViewW;
+        return d;
+    };
+
+    /** 确定性随机（自检要能复现同一批云） */
+    function mulberry32(a) {
+        a = a >>> 0;
+        return function () {
+            a = (a + 0x6D2B79F5) >>> 0;
+            var t = Math.imul(a ^ (a >>> 15), 1 | a);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+    }
+
+    // ========================================================
+    //  云间距：跟着当前跳跃能力走（峰高的 56% ~ 84%）
+    //  默认参数下 = 100 ~ 149px；跳到设置里怎么改，云都还跳得上去
+    // ========================================================
+    function gapMin(t) {
+        var gmax = PHYS.maxJumpH() * 0.84;
+        var gmin = PHYS.maxJumpH() * 0.56;
+        if (gmin < 56) gmin = Math.min(56, gmax);
+        if (gmin > gmax) gmin = gmax;
+        return PHYS.lerp(gmin, gmax, t);
+    }
+
+    // ========================================================
+    //  云的线稿轮廓：与桌面版完全相同的贝塞尔控制点
+    //  局部坐标 x∈[0,w]，y=0 是玩家脚踩的最高面，云体向下延伸 h
+    //  返回绘图命令，渲染层直接照着画
+    // ========================================================
+    function cloudPath(w, h) {
+        return [
+            ['M', w * 0.03, h * 0.90],
+            ['L', w * 0.97, h * 0.90],
+            ['C', w * 1.00, h * 0.55, w * 0.98, h * 0.22, w * 0.82, h * 0.22],
+            ['C', w * 0.74, h * 0.22, w * 0.68, 0, w * 0.54, 0],
+            ['C', w * 0.40, 0, w * 0.36, h * 0.20, w * 0.26, h * 0.20],
+            ['C', w * 0.10, h * 0.20, w * 0.00, h * 0.55, w * 0.03, h * 0.90]
+        ];
+    }
+
+    // ========================================================
+    //  云
+    // ========================================================
+    function Cloud(kind, x, y, w, h) {
+        this.kind = kind;          // 'start' | 'normal' | 'thin'
+        this.x = x; this.y = y; this.w = w; this.h = h;
+        this.touched = false;
+        this.gone = false;
+    }
+    Cloud.prototype.cx = function () { return this.x + this.w * 0.5; };
+
+    // ========================================================
+    //  云世界：程序化生成，越往上越稀、越窄、越远
+    // ========================================================
+    function CloudWorld(seed) { this.reset(seed); }
+
+    CloudWorld.prototype.reset = function (seed) {
+        this.rng = mulberry32(seed || 1);
+        this.clouds = [];
+        this.reachedOk = 0;
+        var w = 230;
+        var start = new Cloud('start', PHYS.ViewW * 0.5 - w * 0.5, 0, w, PHYS.CloudH + 4);
+        this.clouds.push(start);
+        this.last = start;
+        this.topY = 0;
+    };
+
+    Object.defineProperty(CloudWorld.prototype, 'climb', {
+        get: function () { return -this.topY; }
+    });
+    Object.defineProperty(CloudWorld.prototype, 'difficulty', {
+        get: function () { return Math.min(1, this.climb / 5000); }
+    });
+
+    /** 保证相机上方一直有云可踩 */
+    CloudWorld.prototype.ensure = function (camY) {
+        var need = camY - PHYS.ViewH * 0.55, guard = 0;
+        while (this.topY > need && guard++ < 600) this.spawnNext();
+    };
+
+    CloudWorld.prototype.spawnNext = function () {
+        var t = this.difficulty;
+        var gap = gapMin(t);
+        var w = PHYS.lerp(100, 78, t);
+        var kind = 'normal';
+        if (this.climb > 900 && this.rng() < 0.10 + 0.28 * t) {
+            kind = 'thin';
+            w = 58;
+        }
+
+        // 水平偏移：既保证跳得到，也保证不会正好落在正上方
+        // （minOff 要给可达上限让位，否则极端低跳参数下会生成跳不到的云）
+        // 注意：这里按“云中心”而不是“云左边界”取偏移——玩家落点判定看的是中心距，
+        // 云宽不同（普通 78~100 vs 小云 58）时左边界偏移会与中心距差出十几 px，
+        // 卡在 0.85*reach 上就会顶穿可达上限。
+        var lim = PHYS.maxReach(gap) * 0.85;
+        var offMax = PHYS.lerp(130, 175, t);
+        if (lim > offMax) lim = offMax;
+        var minOff = 55;
+        if (minOff > lim * 0.75) minOff = lim * 0.75;
+
+        var mag = minOff + this.rng() * (lim - minOff);
+        var sign = this.rng() < 0.5 ? -1 : 1;
+        var cx = PHYS.wrap(this.last.cx() + sign * mag);
+        var x = PHYS.wrap(cx - w * 0.5);
+
+        this.reachedOk++;
+
+        var c = new Cloud(kind, x, this.topY - gap, w, kind === 'thin' ? PHYS.CloudH - 3 : PHYS.CloudH);
+        this.clouds.push(c);
+        this.last = c;
+        this.topY = c.y;
+    };
+
+    /** 丢掉已经远远落在相机下方的云（相机只上移，回不去） */
+    CloudWorld.prototype.trim = function (camY) {
+        var cut = camY + PHYS.ViewH + 400, n = 0;
+        while (n < this.clouds.length && this.clouds[n].y > cut) n++;
+        if (n > 0) this.clouds.splice(0, n);
+    };
+
+    /** 相邻云可达性审计（自检用） */
+    CloudWorld.prototype.reachAudit = function () {
+        var pairs = 0, fail = 0, worst = 99999;
+        for (var i = 1; i < this.clouds.length; i++) {
+            var a = this.clouds[i - 1], b = this.clouds[i];
+            var dy = a.y - b.y;
+            var dx = Math.abs(PHYS.wrapDelta(b.cx() - a.cx()));
+            var reach = PHYS.maxReach(dy);
+            pairs++;
+            if (reach < 0 || dx > reach) fail++;
+            else if (reach - dx < worst) worst = reach - dx;
+        }
+        return { pairs: pairs, fail: fail, worst: worst < 99999 ? worst : 0 };
+    };
+
+    // ========================================================
+    //  游戏主逻辑
+    // ========================================================
+    var MODE = { LOADING: 'loading', READY: 'ready', PLAY: 'play', PAUSED: 'paused', DEAD: 'dead', SETTINGS: 'settings' };
+
+    function CloudGame() {
+        this.mode = MODE.LOADING;
+        this.loadT = 0;
+        this.loadTotal = 1.8;
+        this.loadSteps = ['初始化线条渲染器', '生成云层世界', '校验跳跃弧线', '载入操作提示'];
+
+        this.world = new CloudWorld(1);
+        this.input = { left: false, right: false, jumpPressed: false, jumpReleased: false };
+
+        this.bestM = 0;
+        this.newRecord = false;
+        this.deathCount = 0;
+        this.time = 0;
+
+        this.shards = [];
+        this.ring = { x: 0, y: 0, t: PHYS.RingMax };
+
+        this.placePlayer();
+        this.cloudTouched = 0;
+        this.runTime = 0;
+        this.minY = this.py;
+        this.started = false;
+
+        // 自检统计
+        this.bumpRising = 0;
+        this.bumpFalling = 0;
+    }
+
+    CloudGame.prototype.placePlayer = function () {
+        this.px = PHYS.ViewW * 0.5;
+        this.py = -PHYS.PlayerH;
+        this.vx = 0; this.vy = 0;
+        this.onGround = true;
+        this.standing = this.world.clouds[0];
+        this.coyoteT = 0; this.bufferT = 0;
+        this.squash = 1; this.runPhase = 0;
+        this.camY = this.py - PHYS.ViewH * 0.62;
+    };
+
+    // ---- 加载界面 ----
+    CloudGame.prototype.loadProgress = function () {
+        return Math.min(1, this.loadT / this.loadTotal);
+    };
+    CloudGame.prototype.loadStepIndex = function () {
+        var n = this.loadSteps.length;
+        return Math.min(Math.floor(this.loadT / (this.loadTotal / n)), n);
+    };
+    CloudGame.prototype.advanceLoading = function (dt) {
+        if (this.mode !== MODE.LOADING) return;
+        this.loadT += dt;
+        if (this.loadT >= this.loadTotal) { this.loadT = this.loadTotal; this.mode = MODE.READY; }
+    };
+
+    // ---- 开一局 ----
+    CloudGame.prototype.startRun = function (seed) {
+        if (seed === undefined || seed === null) seed = (Math.random() * 2147483647) | 0;
+        this.world.reset(seed);
+        this.px = PHYS.ViewW * 0.5;
+        this.py = -PHYS.PlayerH;
+        this.vx = 0; this.vy = 0;
+        this.onGround = true;
+        this.standing = this.world.clouds[0];
+        this.coyoteT = 0; this.bufferT = 0;
+        this.squash = 1; this.runPhase = 0;
+        this.input.left = false; this.input.right = false;
+        this.input.jumpPressed = false; this.input.jumpReleased = false;
+        this.camY = this.py - PHYS.ViewH * 0.62;
+        this.minY = this.py;
+        this.cloudTouched = 0;
+        this.runTime = 0;
+        this.newRecord = false;
+        this.started = false;
+        this.shards.length = 0;
+        this.ring.t = PHYS.RingMax;
+        this.world.ensure(this.camY);
+        this.world.trim(this.camY);
+        this.mode = MODE.PLAY;
+    };
+
+    CloudGame.prototype.heightM = function () {
+        var h = -(this.minY + PHYS.PlayerH) / PHYS.PixelsPerMeter;
+        return h < 0 ? 0 : h;
+    };
+
+    CloudGame.prototype.pose = function () {
+        if (!this.onGround) return this.vy < 0 ? 'rise' : 'fall';
+        if (Math.abs(this.vx) > 18) return 'run';
+        return 'idle';
+    };
+
+    // ---- 粒子 ----
+    CloudGame.prototype.burst = function (x, y, n) {
+        for (var i = 0; i < n; i++) {
+            var a = (i / n) * 6.2831853 + this.time * 3.1;
+            var sp = 40 + (i % 3) * 26;
+            this.shards.push({
+                x: x, y: y,
+                vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.7 - 30,
+                life: 0, max: 0.42 + (i % 3) * 0.09, len: 4 + (i % 2) * 3, ang: a
+            });
+        }
+    };
+
+    CloudGame.prototype.burstRing = function (x, y, n, speed) {
+        for (var i = 0; i < n; i++) {
+            var a = (i / n) * 6.2831853;
+            this.shards.push({
+                x: x, y: y,
+                vx: Math.cos(a) * speed, vy: Math.sin(a) * speed * 0.45,
+                life: 0, max: 0.50, len: 5, ang: a
+            });
+        }
+    };
+
+    // ---- 踩到云 ----
+    CloudGame.prototype.landOn = function (c) {
+        if (c.kind === 'start') {
+            // 出生云：不消失，站在上面等玩家起跳
+            this.py = c.y - PHYS.PlayerH;
+            this.vy = 0;
+            this.onGround = true;
+            this.standing = c;
+            this.squash = 0.76;
+            return;
+        }
+
+        // 每朵云只能踩一次：踩到即消失
+        c.touched = true;
+        c.gone = true;
+        this.cloudTouched++;
+        if (this.vy < 0) this.bumpRising++; else this.bumpFalling++;
+
+        if (this.py + PHYS.PlayerH > c.y) this.py = c.y - PHYS.PlayerH;
+
+        // 自动弹起（水平速度保留，飞行途中继续调落点）
+        this.vy = -PHYS.JumpV;
+        this.onGround = false;
+        this.standing = null;
+        this.coyoteT = 0;
+        this.bufferT = 0;
+        this.squash = 1.30;
+        this.started = true;
+
+        this.ring.x = c.cx();
+        this.ring.y = c.y;
+        this.ring.t = 0;
+        this.burstRing(c.cx(), c.y + 2, 12, 165);
+        this.burst(c.cx(), c.y + 2, 4);
+    };
+
+    CloudGame.prototype.die = function () {
+        this.mode = MODE.DEAD;
+        this.deathCount++;
+        var h = this.heightM();
+        if (h > this.bestM) { this.bestM = h; this.newRecord = true; }
+    };
+
+    // ---- 一个固定物理步 ----
+    CloudGame.prototype.step = function (dt) {
+        if (this.mode === MODE.PLAY) this.runTimeReal(dt);
+        this.time += dt;
+
+        if (this.mode !== MODE.PLAY) {
+            this.input.jumpPressed = false;
+            this.input.jumpReleased = false;
+            this.updateEffects(dt);
+            return;
+        }
+
+        var P = PHYS;
+
+        // ---- 水平 ----
+        var dir = (this.input.right ? 1 : 0) - (this.input.left ? 1 : 0);
+        if (dir !== 0) {
+            var a = (this.onGround ? P.GroundAccel : P.AirAccel) * dt;
+            this.vx += dir * a;
+            this.vx = P.clamp(this.vx, -P.MaxRun, P.MaxRun);
+        } else {
+            var fr = (this.onGround ? P.Friction : P.AirDrag) * dt;
+            if (this.vx > fr) this.vx -= fr;
+            else if (this.vx < -fr) this.vx += fr;
+            else this.vx = 0;
+        }
+
+        // ---- 跳跃（不再区分长按 / 短按：一律跳满）----
+        if (this.input.jumpPressed) this.bufferT = P.JumpBuffer;
+        this.input.jumpPressed = false;
+        this.input.jumpReleased = false;
+
+        if (this.bufferT > 0) this.bufferT -= dt;
+        if (this.coyoteT > 0) this.coyoteT -= dt;
+
+        if (this.bufferT > 0 && (this.onGround || this.coyoteT > 0)) {
+            this.vy = -P.JumpV;
+            this.bufferT = 0; this.coyoteT = 0;
+            this.onGround = false; this.standing = null;
+            this.squash = 1.28;
+            this.burst(this.px, this.py + P.PlayerH, 3);
+        }
+
+        // ---- 竖直 ----
+        var prevBottom = this.py + P.PlayerH;
+        if (this.onGround && this.standing) {
+            this.py = this.standing.y - P.PlayerH;
+            this.vy = 0;
+        } else {
+            this.vy += P.Gravity * dt;
+            if (this.vy > P.MaxFall) this.vy = P.MaxFall;
+            this.py += this.vy * dt;
+        }
+
+        // ---- 水平位移（屏幕左右环绕）----
+        this.px = P.wrap(this.px + this.vx * dt);
+
+        // ---- 站立维持 ----
+        if (this.onGround) {
+            if (!this.standing || this.standing.gone) {
+                this.onGround = false; this.standing = null; this.coyoteT = P.Coyote;
+            } else {
+                var sdx = Math.abs(P.wrapDelta(this.px - this.standing.cx()));
+                if (sdx > (P.PlayerW + this.standing.w) * 0.5) {
+                    this.onGround = false; this.standing = null; this.coyoteT = P.Coyote;
+                }
+            }
+        }
+
+        // ---- 踩云：脚底跨过云顶就算踩到，上升 / 下落都算 ----
+        if (!this.onGround) {
+            var bottom = this.py + P.PlayerH;
+            var lo = Math.min(prevBottom, bottom) - 3;
+            var hi = Math.max(prevBottom, bottom) + 3;
+            var hit = null, bestTop = Infinity;
+            for (var i = 0; i < this.world.clouds.length; i++) {
+                var c = this.world.clouds[i];
+                if (c.gone) continue;
+                // 出生云：上升时直接穿过（否则起跳那一帧会被判定成“踩到”而粘回原地）
+                if (c.kind === 'start' && this.vy < 0) continue;
+                if (c.y >= bestTop) continue;
+                if (c.y < lo || c.y > hi) continue;
+                var dx = Math.abs(P.wrapDelta(this.px - c.cx()));
+                if (dx > (P.PlayerW + c.w) * 0.5) continue;
+                bestTop = c.y;
+                hit = c;
+            }
+            if (hit) this.landOn(hit);
+        }
+
+        // ---- 世界推进 ----
+        if (this.py < this.minY) this.minY = this.py;
+        var camTarget = this.py - P.ViewH * 0.58;
+        if (camTarget < this.camY) this.camY += (camTarget - this.camY) * Math.min(1, dt * 14);
+        this.world.ensure(this.camY);
+        this.world.trim(this.camY);
+
+        if (this.onGround && this.standing && Math.abs(this.vx) > 18) {
+            this.runPhase += dt * (7 + Math.abs(this.vx) * 0.035);
+        }
+
+        if (this.squash !== 1) this.squash += (1 - this.squash) * Math.min(1, dt * 11);
+
+        this.updateEffects(dt);
+
+        // ---- 掉出屏幕底部 → 失败 ----
+        if (this.py - this.camY > P.ViewH + 60) this.die();
+    };
+
+    CloudGame.prototype.runTimeReal = function (dt) { this.runTime += dt; };
+
+    CloudGame.prototype.updateEffects = function (dt) {
+        for (var i = this.shards.length - 1; i >= 0; i--) {
+            var s = this.shards[i];
+            s.life += dt;
+            if (s.life >= s.max) { this.shards.splice(i, 1); continue; }
+            s.vy += 900 * dt;
+            s.x += s.vx * dt;
+            s.y += s.vy * dt;
+        }
+        if (this.squash !== 1 && this.mode !== MODE.PLAY) {
+            this.squash += (1 - this.squash) * Math.min(1, dt * 11);
+        }
+        if (this.ring.t < PHYS.RingMax) this.ring.t += dt;
+    };
+
+    // ---- 设置 ----
+    CloudGame.prototype.adjustSetting = function (index, dir) {
+        if (index === 0) PHYS.JumpV = PHYS.clamp(PHYS.JumpV + dir * PHYS.JumpVStep, PHYS.JumpVMin, PHYS.JumpVMax);
+        else PHYS.Gravity = PHYS.clamp(PHYS.Gravity + dir * PHYS.GravityStep, PHYS.GravityMin, PHYS.GravityMax);
+    };
+    CloudGame.prototype.resetSettings = function () {
+        PHYS.JumpV = PHYS.JumpVDefault;
+        PHYS.Gravity = PHYS.GravityDefault;
+    };
+
+    return {
+        PHYS: PHYS,
+        MODE: MODE,
+        Cloud: Cloud,
+        CloudWorld: CloudWorld,
+        CloudGame: CloudGame,
+        gapMin: gapMin,
+        cloudPath: cloudPath,
+        mulberry32: mulberry32
+    };
+}));
+
+</script>
+<script>
+// ============================================================
+//  CLOUD LADDER 云梯 — 手机版界面层
+//  Canvas 渲染 + 触屏操作 + 主循环（requestAnimationFrame）
+//  逻辑分辨率固定 480x640，等比缩放到整屏（letterbox）
+//
+//  操作：按住屏幕左半边/右半边控制方向；踩到云会自动弹起。
+// ============================================================
+(function () {
+    'use strict';
+
+    var E = window.CloudEngine;
+    var PHYS = E.PHYS, MODE = E.MODE, CloudGame = E.CloudGame, cloudPath = E.cloudPath;
+
+    var VW = PHYS.ViewW, VH = PHYS.ViewH;
+
+    // --------------------------------------------------------
+    //  画布 / 字体 / 配色（与桌面版一致）
+    // --------------------------------------------------------
+    var canvas = document.getElementById('game');
+    var ctx = canvas.getContext('2d', { alpha: false });
+
+    var COL = {
+        bg: '#101114',
+        grid: '#1c1d22',
+        gridMajor: '#282a32',
+        far: '#2e3038',
+        cloud: '#eef1f8',
+        cloudThin: '#c4c9d4',
+        player: '#ffffff',
+        danger: '#3a3c46',
+        text: '#eef0f6',
+        dim: '#9296a2',
+        faint: '#606470',
+        frame: '#787c88',
+        mask: 'rgba(16,17,20,0.93)'
+    };
+
+    var FONT = '"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,-apple-system,sans-serif';
+    function font(size, bold) { return (bold ? '700 ' : '400 ') + size + 'px ' + FONT; }
+
+    var F = {
+        title: font(50, true), sub: font(13), hudBig: font(26, true),
+        small: font(13), tiny: font(12), big: font(34, true), mid: font(18, true),
+        btn: font(16, true), btnSm: font(13, true), arrow: font(30, true)
+    };
+
+    var HINTS = [
+        '踩到云会自动弹起，云随即消失',
+        '按住屏幕左半边 / 右半边控制方向',
+        '上升途中脚擦到云顶，也算踩到云',
+        '完全掉出屏幕底部，本轮就结束了',
+        '爬得越高，云越稀、越窄、越远'
+    ];
+
+    function layout() {
+        var vw = window.innerWidth, vh = window.innerHeight;
+        var s = Math.min(vw / VW, vh / VH);
+        canvas.style.width = Math.floor(VW * s) + 'px';
+        canvas.style.height = Math.floor(VH * s) + 'px';
+
+        var want = Math.min(2, window.devicePixelRatio || 1);
+        var pw = Math.round(VW * want), ph = Math.round(VH * want);
+        if (canvas.width !== pw || canvas.height !== ph) {
+            canvas.width = pw;
+            canvas.height = ph;
+        }
+        ctx.setTransform(want, 0, 0, want, 0, 0);
+        ctx.textBaseline = 'top';
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+    }
+    window.addEventListener('resize', layout);
+    window.addEventListener('orientationchange', function () { setTimeout(layout, 150); });
+
+    function toLogical(clientX, clientY) {
+        var r = canvas.getBoundingClientRect();
+        return {
+            x: (clientX - r.left) / r.width * VW,
+            y: (clientY - r.top) / r.height * VH
+        };
+    }
+
+    // --------------------------------------------------------
+    //  状态
+    // --------------------------------------------------------
+    var game = new CloudGame();
+    var blinkT = 0, hintT = 0, hintIndex = 0, decoT = 0;
+    var fps = 0, fpsFrames = 0, fpsClock = 0;
+    var settingIndex = 0, settingsFrom = MODE.READY;
+    var uiButtons = [];
+    var pads = [];
+    var touchHintT = 0;
+
+    // ---- 存档（localStorage 不可用时静默降级）----
+    function loadStore() {
+        try {
+            var s = localStorage.getItem('cloudclimb');
+            if (!s) return;
+            var o = JSON.parse(s);
+            if (typeof o.bestM === 'number' && o.bestM > 0) game.bestM = o.bestM;
+            if (typeof o.jump === 'number') PHYS.JumpV = PHYS.clamp(o.jump, PHYS.JumpVMin, PHYS.JumpVMax);
+            if (typeof o.gravity === 'number') PHYS.Gravity = PHYS.clamp(o.gravity, PHYS.GravityMin, PHYS.GravityMax);
+        } catch (e) { }
+    }
+    function saveStore() {
+        try {
+            localStorage.setItem('cloudclimb', JSON.stringify({
+                bestM: game.bestM, jump: PHYS.JumpV, gravity: PHYS.Gravity
+            }));
+        } catch (e) { }
+    }
+    loadStore();
+
+    // --------------------------------------------------------
+    //  动作
+    // --------------------------------------------------------
+    function beginRun() {
+        game.startRun();
+        touchHintT = 3.4;
+    }
+    function enterSettings() {
+        settingsFrom = (game.mode === MODE.PLAY) ? MODE.PAUSED :
+                       (game.mode === MODE.PAUSED ? MODE.PAUSED : MODE.READY);
+        settingIndex = 0;
+        game.mode = MODE.SETTINGS;
+    }
+    function leaveSettings() {
+        saveStore();
+        if (settingsFrom === MODE.PAUSED) { beginRun(); return; }
+        game.mode = settingsFrom;
+    }
+
+    function doAction(a) {
+        switch (a) {
+            case 'start': beginRun(); break;
+            case 'pause': if (game.mode === MODE.PLAY) game.mode = MODE.PAUSED; break;
+            case 'resume': game.mode = MODE.PLAY; break;
+            case 'settings': enterSettings(); break;
+            case 'back': leaveSettings(); break;
+            case 'defaults': game.resetSettings(); saveStore(); break;
+            case 'lj': game.adjustSetting(0, -1); saveStore(); break;
+            case 'rj': game.adjustSetting(0, 1); saveStore(); break;
+            case 'lg': game.adjustSetting(1, -1); saveStore(); break;
+            case 'rg': game.adjustSetting(1, 1); saveStore(); break;
+            case 'restart': beginRun(); break;
+        }
+    }
+
+    function hitButton(p) {
+        for (var i = uiButtons.length - 1; i >= 0; i--) {
+            var b = uiButtons[i];
+            if (p.x >= b.x && p.x <= b.x + b.w && p.y >= b.y && p.y <= b.y + b.h) return b.action;
+        }
+        return null;
+    }
+
+    // --------------------------------------------------------
+    //  输入
+    // --------------------------------------------------------
+    function onDown(e) {
+        e.preventDefault();
+        var p = toLogical(e.clientX, e.clientY);
+        var a = hitButton(p);
+        if (a) { doAction(a); return; }
+        if (game.mode === MODE.READY) { beginRun(); return; }
+        if (game.mode === MODE.DEAD) { beginRun(); return; }
+        if (game.mode === MODE.PLAY) {
+            pads.push({ id: e.pointerId, x: p.x });
+            // 还站在出生云上：点一下就起跳（手机上唯一的“跳跃”入口，
+            // 之后踩到云会自动弹起，就不再需要跳跃键了）
+            if (!game.started && game.onGround) game.input.jumpPressed = true;
+        }
+    }
+    function onMove(e) {
+        for (var i = 0; i < pads.length; i++) {
+            if (pads[i].id === e.pointerId) { pads[i].x = toLogical(e.clientX, e.clientY).x; return; }
+        }
+    }
+    function onUp(e) {
+        for (var i = pads.length - 1; i >= 0; i--) if (pads[i].id === e.pointerId) pads.splice(i, 1);
+    }
+
+    canvas.addEventListener('pointerdown', onDown, { passive: false });
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerup', onUp, { passive: true });
+    window.addEventListener('pointercancel', onUp, { passive: true });
+    window.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+    // 桌面键盘（方便在电脑上调试同一份文件）
+    var keys = {};
+    window.addEventListener('keydown', function (e) {
+        keys[e.key] = true;
+        if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w') {
+            if (game.mode === MODE.READY || game.mode === MODE.DEAD) beginRun();
+            else if (game.mode === MODE.PLAY) game.input.jumpPressed = true;
+            e.preventDefault();
+        }
+        if (e.key === 'p' || e.key === 'P') {
+            if (game.mode === MODE.PLAY) game.mode = MODE.PAUSED;
+            else if (game.mode === MODE.PAUSED) game.mode = MODE.PLAY;
+        }
+        if ((e.key === 's' || e.key === 'S') &&
+            (game.mode === MODE.READY || game.mode === MODE.PLAY || game.mode === MODE.PAUSED)) enterSettings();
+        if (e.key === 'Escape' && game.mode === MODE.SETTINGS) leaveSettings();
+        if (e.key === 'r' || e.key === 'R') {
+            if (game.mode === MODE.PLAY || game.mode === MODE.DEAD || game.mode === MODE.PAUSED) beginRun();
+        }
+    });
+    window.addEventListener('keyup', function (e) { keys[e.key] = false; });
+
+    function applyInput() {
+        var left = false, right = false;
+        for (var i = 0; i < pads.length; i++) {
+            if (pads[i].x < VW * 0.5) left = true; else right = true;
+        }
+        if (keys['ArrowLeft'] || keys['a'] || keys['A']) left = true;
+        if (keys['ArrowRight'] || keys['d'] || keys['D']) right = true;
+        game.input.left = left;
+        game.input.right = right;
+    }
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden && game.mode === MODE.PLAY) game.mode = MODE.PAUSED;
+    });
+
+    // 保险：万一在窗口外松开（收不到 pointerup），别让触点卡住导致角色一直往一边跑
+    window.addEventListener('blur', function () { pads.length = 0; });
+
+    // --------------------------------------------------------
+    //  绘图工具
+    // --------------------------------------------------------
+    function textC(str, y, f, color) {
+        ctx.font = f; ctx.fillStyle = color;
+        ctx.fillText(str, (VW - ctx.measureText(str).width) * 0.5, y);
+    }
+    function textL(str, x, y, f, color) {
+        ctx.font = f; ctx.fillStyle = color; ctx.fillText(str, x, y);
+    }
+    function textR(str, x, y, f, color) {
+        ctx.font = f; ctx.fillStyle = color;
+        ctx.fillText(str, x - ctx.measureText(str).width, y);
+    }
+
+    function roundRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+    }
+
+    /** 线框按钮 + 登记热区 */
+    function button(x, y, w, h, label, action, size) {
+        uiButtons.push({ x: x, y: y, w: w, h: h, action: action });
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = COL.frame;
+        roundRect(x, y, w, h, 6);
+        ctx.stroke();
+        var f = size ? font(size, true) : F.btn;
+        ctx.font = f; ctx.fillStyle = COL.text;
+        var tw = ctx.measureText(label).width;
+        var fs = size || 16;
+        ctx.fillText(label, x + (w - tw) * 0.5, y + (h - fs) * 0.5 + 1);
+    }
+
+    function traceCloud(w, h, ox, oy, sx, sy) {
+        sx = sx || 1; sy = sy || 1;
+        var cmds = cloudPath(w, h);
+        ctx.beginPath();
+        for (var i = 0; i < cmds.length; i++) {
+            var c = cmds[i];
+            if (c[0] === 'M') ctx.moveTo(ox + c[1] * sx, oy + c[2] * sy);
+            else if (c[0] === 'L') ctx.lineTo(ox + c[1] * sx, oy + c[2] * sy);
+            else ctx.bezierCurveTo(
+                ox + c[1] * sx, oy + c[2] * sy,
+                ox + c[3] * sx, oy + c[4] * sy,
+                ox + c[5] * sx, oy + c[6] * sy);
+        }
+        ctx.closePath();
+    }
+
+    function drawMan(cx, feet, pose, phase) {
+        var headR = 4.6, headCY = feet - 24.5, shoulder = feet - 19, hip = feet - 11.5;
+        ctx.strokeStyle = COL.player;
+        ctx.lineWidth = 1.9;
+        ctx.beginPath(); ctx.arc(cx, headCY, headR, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, headCY + headR); ctx.lineTo(cx, hip); ctx.stroke();
+
+        ctx.beginPath();
+        if (pose === 'rise') {
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx - 7, shoulder - 5);
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx + 7, shoulder - 5);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx - 5, feet - 5);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx + 3.5, feet - 1);
+        } else if (pose === 'fall') {
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx - 8, shoulder + 1);
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx + 8, shoulder + 1);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx - 4, feet - 1);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx + 4.5, feet - 1.5);
+        } else if (pose === 'run') {
+            var s = Math.sin(phase);
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx - s * 6 - 1, shoulder + 5.5);
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx + s * 6 + 1, shoulder + 5.5);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx + s * 5.5, feet);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx - s * 5.5, feet);
+        } else {
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx - 5, shoulder + 7);
+            ctx.moveTo(cx, shoulder); ctx.lineTo(cx + 5, shoulder + 7);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx - 3.5, feet);
+            ctx.moveTo(cx, hip); ctx.lineTo(cx + 3.5, feet);
+        }
+        ctx.stroke();
+    }
+
+    function hash01(i, salt) {
+        var h = (i * 374761393 + salt * 668265263) | 0;
+        h = (h ^ (h >>> 13)) * 1274126177 | 0;
+        h = h ^ (h >>> 16);
+        return (h & 0xFFFFFF) / 0x1000000;
+    }
+
+    // --------------------------------------------------------
+    //  世界
+    // --------------------------------------------------------
+    function drawHeightGuides(g) {
+        var step = 64;
+        var k0 = Math.floor(g.camY / step) - 1, k1 = Math.ceil((g.camY + VH) / step) + 1;
+        ctx.lineWidth = 1;
+        for (var k = k0; k <= k1; k++) {
+            if (k > 0) continue;
+            var sy = Math.round(k * step - g.camY) + 0.5;
+            var major = (k % 5 === 0);
+            ctx.strokeStyle = major ? COL.gridMajor : COL.grid;
+            ctx.beginPath(); ctx.moveTo(0, sy); ctx.lineTo(VW, sy); ctx.stroke();
+            if (major && k < 0 && sy > 60) {
+                // 靠右画，避开左上角的 HUD
+                textR((-k * step / PHYS.PixelsPerMeter).toFixed(0) + ' m',
+                    VW - 12, sy - 15, F.tiny, COL.faint);
+            }
+        }
+    }
+
+    function drawFarClouds(g) {
+        var par = g.camY * 0.45;
+        var i0 = Math.floor((par - 140) / 220), i1 = Math.ceil((par + VH + 140) / 220);
+        ctx.strokeStyle = COL.far;
+        ctx.lineWidth = 1.2;
+        for (var i = i0; i <= i1; i++) {
+            var sy = i * 220 - par;
+            var w = 110 + hash01(i, 13) * 120;
+            var x = hash01(i, 7) * (VW + 200) - 100 +
+                    Math.sin(decoT * 0.22 + hash01(i, 29) * 6.28) * 14;
+            traceCloud(120, 15, x, sy, w / 120, 1);
+            ctx.stroke();
+        }
+    }
+
+    function drawClouds(g) {
+        for (var i = 0; i < g.world.clouds.length; i++) {
+            var c = g.world.clouds[i];
+            if (c.gone) continue;
+            var sy = c.y - g.camY;
+            if (sy < -70 || sy > VH + 70) continue;
+            if (c.kind === 'thin') {
+                ctx.strokeStyle = COL.cloudThin;
+                ctx.lineWidth = 1.4;
+                ctx.setLineDash([5, 4]);
+            } else {
+                ctx.strokeStyle = COL.cloud;
+                ctx.lineWidth = 1.7;
+                ctx.setLineDash([]);
+            }
+            traceCloud(c.w, c.h, c.x, sy, 1, 1);
+            ctx.stroke();
+            if (c.x + c.w > VW) { traceCloud(c.w, c.h, c.x - VW, sy, 1, 1); ctx.stroke(); }
+            ctx.setLineDash([]);
+        }
+    }
+
+    function drawShards(g) {
+        ctx.lineWidth = 1.4;
+        for (var i = 0; i < g.shards.length; i++) {
+            var s = g.shards[i];
+            var a = 200 * (1 - s.life / s.max);
+            if (a < 26) continue;
+            ctx.strokeStyle = 'rgba(236,240,248,' + (a / 255).toFixed(3) + ')';
+            var x = s.x, y = s.y - g.camY;
+            var dx = Math.cos(s.ang) * s.len, dy = Math.sin(s.ang) * s.len;
+            ctx.beginPath(); ctx.moveTo(x - dx, y - dy); ctx.lineTo(x + dx, y + dy); ctx.stroke();
+        }
+    }
+
+    function drawBumpRing(g) {
+        if (g.ring.t >= PHYS.RingMax) return;
+        var p = g.ring.t / PHYS.RingMax;
+        var r = 10 + 38 * p;
+        var a = 210 * (1 - p * 0.75);
+        var y = g.ring.y - g.camY;
+        if (y < -60 || y > VH + 60) return;
+        ctx.strokeStyle = 'rgba(236,240,248,' + (a / 255).toFixed(3) + ')';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.ellipse(g.ring.x, y, r, r * 0.38, 0, 0, Math.PI * 2); ctx.stroke();
+        if (g.ring.x + r > VW) { ctx.beginPath(); ctx.ellipse(g.ring.x - VW, y, r, r * 0.38, 0, 0, Math.PI * 2); ctx.stroke(); }
+        if (g.ring.x - r < 0) { ctx.beginPath(); ctx.ellipse(g.ring.x + VW, y, r, r * 0.38, 0, 0, Math.PI * 2); ctx.stroke(); }
+    }
+
+    function drawDangerLine(g) {
+        var dy = VH - 42;
+        var hot = (g.py + PHYS.PlayerH - g.camY) > VH * 0.74;
+        ctx.setLineDash([6, 6]);
+        if (hot) {
+            ctx.strokeStyle = ((Math.floor(decoT * 9) % 2) === 0) ? 'rgba(236,240,248,0.82)' : COL.cloudThin;
+            ctx.lineWidth = 1.3;
+        } else {
+            ctx.strokeStyle = COL.danger;
+            ctx.lineWidth = 1;
+        }
+        ctx.beginPath(); ctx.moveTo(0, dy); ctx.lineTo(VW, dy); ctx.stroke();
+        ctx.setLineDash([]);
+    }
+
+    function drawPlayer(g) {
+        var sx = g.px, sy = g.py - g.camY;
+        var kx = 1 / Math.sqrt(g.squash);
+        ctx.save();
+        ctx.translate(sx, sy + PHYS.PlayerH);
+        ctx.scale(kx, g.squash);
+        ctx.translate(-sx, -(sy + PHYS.PlayerH));
+        drawMan(sx, sy + PHYS.PlayerH, g.pose(), g.runPhase);
+        ctx.restore();
+
+        if (sx < PHYS.PlayerW) drawMan(sx + VW, sy + PHYS.PlayerH, g.pose(), g.runPhase);
+        else if (sx > VW - PHYS.PlayerW) drawMan(sx - VW, sy + PHYS.PlayerH, g.pose(), g.runPhase);
+    }
+
+    function drawWorld(g) {
+        drawHeightGuides(g);
+        drawFarClouds(g);
+        drawClouds(g);
+        drawBumpRing(g);
+        drawShards(g);
+        drawDangerLine(g);
+        drawPlayer(g);
+    }
+
+    // --------------------------------------------------------
+    //  HUD（含触屏按钮）
+    // --------------------------------------------------------
+    function drawHud(g) {
+        textL(g.heightM().toFixed(1) + ' m', 14, 10, F.hudBig, COL.text);
+        textL('踩过 ' + g.cloudTouched + ' 朵云', 15, 42, F.small, COL.dim);
+        textL('最佳 ' + g.bestM.toFixed(1) + ' m', 15, 62, F.small, COL.dim);
+        textL(g.runTime.toFixed(1) + ' s', 15, 80, F.tiny, COL.faint);
+
+        // 右上：暂停 / 设置
+        var bx = VW - 88, by = 10, bw = 36, bh = 30;
+        uiButtons.push({ x: bx, y: by, w: bw, h: bh, action: 'pause' });
+        ctx.lineWidth = 1.2; ctx.strokeStyle = COL.frame;
+        roundRect(bx, by, bw, bh, 6); ctx.stroke();
+        ctx.fillStyle = COL.text;
+        ctx.fillRect(bx + 12, by + 9, 4, 12);
+        ctx.fillRect(bx + 20, by + 9, 4, 12);
+
+        bx = VW - 46;
+        uiButtons.push({ x: bx, y: by, w: bw, h: bh, action: 'settings' });
+        ctx.lineWidth = 1.2; ctx.strokeStyle = COL.frame;
+        roundRect(bx, by, bw, bh, 6); ctx.stroke();
+        ctx.font = font(14, true); ctx.fillStyle = COL.text;
+        ctx.fillText('设', bx + (bw - ctx.measureText('设').width) * 0.5, by + 7);
+
+        // 开局引导：还没起跳就提示“点屏幕”，起跳后提示左右
+        if (!g.started && g.onGround) {
+            var on = ((Math.floor(blinkT * 1.8) % 2) === 0);
+            ctx.fillStyle = on ? COL.text : COL.dim;
+            ctx.font = F.mid;
+            var tip0 = '点一下屏幕起跳';
+            ctx.fillText(tip0, (VW - ctx.measureText(tip0).width) * 0.5, g.py - g.camY - 46);
+            ctx.font = F.tiny;
+            ctx.fillStyle = COL.faint;
+            var tip1 = '起跳后踩到云会自动弹起，只需左右控制';
+            ctx.fillText(tip1, (VW - ctx.measureText(tip1).width) * 0.5, g.py - g.camY - 22);
+        } else if (touchHintT > 0) {
+            var a = Math.min(1, touchHintT / 1.0) * 0.75;
+            ctx.fillStyle = 'rgba(238,240,246,' + a.toFixed(3) + ')';
+            ctx.font = F.arrow;
+            ctx.fillText('◀', 26, VH * 0.62);
+            ctx.fillText('▶', VW - 26 - ctx.measureText('▶').width, VH * 0.62);
+            ctx.font = F.small;
+            var tip = '按住左 / 右半屏移动';
+            ctx.fillText(tip, (VW - ctx.measureText(tip).width) * 0.5, VH * 0.62 + 40);
+        }
+
+        if (fps > 0) textR(fps.toFixed(0) + ' FPS', VW - 14, VH - 26, F.tiny, COL.faint);
+    }
+
+    // --------------------------------------------------------
+    //  加载 / 就绪
+    // --------------------------------------------------------
+    function drawLoading(g) {
+        for (var i = 0; i < 5; i++) {
+            var y = VH * 0.26 + i * 74 + Math.sin(decoT * 0.35 + i * 1.7) * 7;
+            var w = 150 + i * 34;
+            var x = ((decoT * (9 + i * 3)) % (VW + w * 2)) - w;
+            ctx.strokeStyle = COL.far;
+            ctx.lineWidth = 1.2;
+            traceCloud(120, 15, x, y, w / 120, 1); ctx.stroke();
+            traceCloud(120, 15, x - VW - w, y, w / 120, 1); ctx.stroke();
+        }
+
+        textC('云    梯', VH * 0.115, F.title, COL.text);
+        textC('C L O U D   L A D D E R', VH * 0.115 + 60, F.sub, COL.dim);
+        ctx.strokeStyle = COL.frame; ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(VW * 0.5 - 132, VH * 0.115 + 84);
+        ctx.lineTo(VW * 0.5 + 132, VH * 0.115 + 84);
+        ctx.stroke();
+
+        // 中间示意：三朵云 + 站在云上的小人
+        var cy = VH * 0.44;
+        var bob = Math.sin(decoT * 1.5) * 4;
+        ctx.strokeStyle = COL.cloudThin; ctx.lineWidth = 1.5;
+        traceCloud(120, 15, VW * 0.5 - 150, cy + 46, 1.05, 1); ctx.stroke();
+        traceCloud(120, 15, VW * 0.5 - 60, cy + bob, 1.15, 1); ctx.stroke();
+        traceCloud(120, 15, VW * 0.5 + 40, cy - 58 - bob, 0.95, 1); ctx.stroke();
+        drawMan(VW * 0.5 + 9, cy + bob, 'idle', 0);
+
+        // 进度条
+        var barW = 320, barH = 7;
+        var barX = (VW - barW) * 0.5, barY = VH * 0.685;
+        ctx.strokeStyle = COL.frame; ctx.lineWidth = 1;
+        ctx.strokeRect(barX + 0.5, barY + 0.5, barW, barH);
+        var p = g.loadProgress();
+        if (p > 0) {
+            ctx.fillStyle = '#d6dae4';
+            ctx.fillRect(barX + 1.5, barY + 1.5, (barW - 3) * p, barH - 3);
+        }
+        textC((p * 100).toFixed(0) + '%', barY + 14, F.tiny, COL.dim);
+
+        if (g.mode === MODE.LOADING) {
+            var si = g.loadStepIndex();
+            var s = si < g.loadSteps.length ? ('正在加载： ' + g.loadSteps[si]) : '加载完成';
+            textC(s, barY + 40, F.small, COL.dim);
+        } else {
+            button(VW * 0.5 - 80, barY + 36, 160, 46, '开    始', 'start');
+        }
+
+        textC(HINTS[hintIndex], VH * 0.855, F.small, COL.dim);
+        textC('按住屏幕左半边 / 右半边控制方向', VH - 74, F.tiny, COL.faint);
+        textC('踩到云会自动弹起 · 掉出屏幕即失败', VH - 54, F.tiny, COL.faint);
+        if (g.bestM > 0) textC('最佳 ' + g.bestM.toFixed(1) + ' m', VH - 32, F.tiny, COL.faint);
+    }
+
+    // --------------------------------------------------------
+    //  暂停 / 结算 / 设置
+    // --------------------------------------------------------
+    function drawPaused() {
+        ctx.fillStyle = COL.mask;
+        ctx.fillRect(0, 0, VW, VH);
+        textC('暂  停', VH * 0.28, F.big, COL.text);
+        button(VW * 0.5 - 150, VH * 0.44, 140, 48, '继  续', 'resume');
+        button(VW * 0.5 + 10, VH * 0.44, 140, 48, '重  来', 'restart');
+        button(VW * 0.5 - 70, VH * 0.44 + 62, 140, 44, '设  置', 'settings', 15);
+    }
+
+    function drawDead(g) {
+        ctx.fillStyle = COL.mask;
+        ctx.fillRect(0, 0, VW, VH);
+        textC('掉 下 去 了', VH * 0.20, F.big, COL.text);
+        ctx.strokeStyle = COL.frame; ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(VW * 0.5 - 120, VH * 0.20 + 52);
+        ctx.lineTo(VW * 0.5 + 120, VH * 0.20 + 52);
+        ctx.stroke();
+
+        textC('本轮高度   ' + g.heightM().toFixed(1) + ' m', VH * 0.36, F.mid, COL.text);
+        textC('踩过云朵   ' + g.cloudTouched + ' 朵', VH * 0.36 + 30, F.small, COL.dim);
+        textC('坚持时间   ' + g.runTime.toFixed(1) + ' 秒', VH * 0.36 + 54, F.small, COL.dim);
+        if (g.newRecord) textC('— 新 纪 录 —', VH * 0.36 + 88, F.mid, COL.text);
+        else textC('最佳 ' + g.bestM.toFixed(1) + ' m', VH * 0.36 + 88, F.small, COL.dim);
+
+        button(VW * 0.5 - 90, VH * 0.62, 180, 52, '再 来 一 次', 'restart');
+        textC('也可以直接点屏幕任意处', VH * 0.62 + 62, F.tiny, COL.faint);
+    }
+
+    function drawSettings(g) {
+        ctx.fillStyle = COL.mask;
+        ctx.fillRect(0, 0, VW, VH);
+        ctx.fillStyle = COL.mask;
+        ctx.fillRect(0, 0, VW, VH);
+
+        textC('设    置', VH * 0.09, F.big, COL.text);
+        ctx.strokeStyle = COL.frame; ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(VW * 0.5 - 150, VH * 0.09 + 54);
+        ctx.lineTo(VW * 0.5 + 150, VH * 0.09 + 54);
+        ctx.stroke();
+
+        var rows = [
+            { name: '跳跃力度', val: PHYS.JumpV.toFixed(0) + ' px/s', l: 'lj', r: 'rj' },
+            { name: '重    力', val: PHYS.Gravity.toFixed(0) + ' px/s²', l: 'lg', r: 'rg' }
+        ];
+        for (var i = 0; i < rows.length; i++) {
+            var y = VH * 0.24 + i * 60;
+            ctx.font = F.mid; ctx.fillStyle = COL.text;
+            ctx.fillText(rows[i].name, 96, y + 10);
+            textR(rows[i].val, VW - 96, y + 10, F.mid, COL.text);
+            button(58, y, 44, 42, '−', rows[i].l, 22);
+            button(VW - 102, y, 44, 42, '+', rows[i].r, 22);
+        }
+
+        var py = VH * 0.47;
+        ctx.strokeStyle = COL.gridMajor; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(VW * 0.5 - 150, py); ctx.lineTo(VW * 0.5 + 150, py); ctx.stroke();
+
+        var g0 = E.gapMin(0), g1 = E.gapMin(1);
+        var info = [
+            ['跳跃高度', PHYS.maxJumpH().toFixed(0) + ' px'],
+            ['滞空时间', PHYS.airTime().toFixed(2) + ' 秒'],
+            ['云层间距', g0.toFixed(0) + ' ~ ' + g1.toFixed(0) + ' px'],
+            ['水平可达', PHYS.maxReach(g1).toFixed(0) + ' px']
+        ];
+        for (var j = 0; j < info.length; j++) {
+            var iy = py + 18 + j * 26;
+            textL(info[j][0], 96, iy, F.small, COL.dim);
+            textR(info[j][1], VW - 96, iy, F.small, COL.text);
+        }
+
+        button(VW * 0.5 - 150, VH * 0.72, 140, 44, '恢复默认', 'defaults', 15);
+        button(VW * 0.5 + 10, VH * 0.72, 140, 44, '返  回', 'back');
+        textC('云层间距会跟着跳跃能力自动调整', VH * 0.72 + 60, F.tiny, COL.faint);
+        if (settingsFrom === MODE.PAUSED) textC('返回后会重新开始一局', VH * 0.72 + 80, F.tiny, COL.faint);
+    }
+
+    // --------------------------------------------------------
+    //  一帧的绘制
+    // --------------------------------------------------------
+    function render() {
+        uiButtons = [];
+        ctx.fillStyle = COL.bg;
+        ctx.fillRect(0, 0, VW, VH);
+
+        if (game.mode === MODE.LOADING || game.mode === MODE.READY) {
+            drawLoading(game);
+            return;
+        }
+
+        drawWorld(game);
+        if (game.mode !== MODE.SETTINGS) drawHud(game);
+
+        if (game.mode === MODE.PAUSED) drawPaused();
+        else if (game.mode === MODE.DEAD) drawDead(game);
+        else if (game.mode === MODE.SETTINGS) drawSettings(game);
+    }
+
+    // --------------------------------------------------------
+    //  主循环：rAF 驱动，物理固定 240Hz
+    // --------------------------------------------------------
+    var last = 0, acc = 0;
+
+    function frame(now) {
+        requestAnimationFrame(frame);
+
+        if (!last) last = now;
+        var dt = (now - last) / 1000;
+        last = now;
+        if (dt > PHYS.MaxDt) dt = PHYS.MaxDt;
+
+        // 界面动画（真实时间）
+        decoT += dt;
+        blinkT += dt;
+        if (touchHintT > 0) touchHintT -= dt;
+        hintT += dt;
+        if (hintT > 3.2) { hintT = 0; hintIndex = (hintIndex + 1) % HINTS.length; }
+
+        fpsFrames++; fpsClock += dt;
+        if (fpsClock >= 0.5) { fps = fpsFrames / fpsClock; fpsFrames = 0; fpsClock = 0; }
+
+        applyInput();
+
+        acc += dt;
+        var guard = 0;
+        while (acc >= PHYS.Fixed && guard++ < 60) {
+            acc -= PHYS.Fixed;
+            if (game.mode === MODE.LOADING) game.advanceLoading(PHYS.Fixed);
+            var before = game.mode;
+            game.step(PHYS.Fixed);
+            if (before === MODE.PLAY && game.mode === MODE.DEAD) saveStore();
+        }
+
+        render();
+    }
+
+    // 调试钩子：自动化测试可以直接读取/驱动游戏状态（正常游玩无影响）
+    window.__cloudclimb = game;
+
+    // --------------------------------------------------------
+    //  调试 / 截图参数（正常游玩用不到）
+    //    ?autoplay=1        跳过加载直接开局
+    //    &pad=left|right    模拟一直按住左 / 右半屏
+    //    ?screen=settings   直接打开设置界面
+    // --------------------------------------------------------
+    (function applyDebugParams() {
+        var q;
+        try { q = new URLSearchParams(window.location.search); } catch (e) { return; }
+        if (!q) return;
+        if (q.get('screen') === 'settings') {
+            game.loadT = game.loadTotal;
+            game.mode = MODE.READY;
+            enterSettings();
+            return;
+        }
+        if (q.get('autoplay') === '1') {
+            game.loadT = game.loadTotal;
+            game.mode = MODE.READY;
+            beginRun();
+            var pad = q.get('pad');
+            if (pad === 'left') pads.push({ id: 9001, x: VW * 0.25 });
+            else if (pad === 'right') pads.push({ id: 9001, x: VW * 0.75 });
+            game.input.jumpPressed = true;      // 直接从出生云起跳
+
+            // ?skip=12 —— 先同步快进 12 秒（截图用；headless 下 rAF 几乎不触发，
+            // 靠虚拟时间推不动游戏）
+            var skip = parseFloat(q.get('skip') || '0');
+            if (skip > 0) debugFastForward(skip);
+        }
+    })();
+
+    // 调试用快进：按固定步长直接推进物理，用“朝上方最近的可达云移动”的简单策略
+    function debugFastForward(seconds) {
+        var P = PHYS;
+        var target = null;
+        var steps = Math.round(seconds / P.Fixed);
+        for (var i = 0; i < steps && game.mode === MODE.PLAY; i++) {
+            if (!target || target.gone || game.onGround) {
+                var feet = game.py + P.PlayerH;
+                var best = null, near = null, bestY = -Infinity, nearY = -Infinity;
+                for (var j = 0; j < game.world.clouds.length; j++) {
+                    var c = game.world.clouds[j];
+                    if (c.gone) continue;
+                    var rise = feet - c.y;
+                    if (rise < 8) continue;
+                    if (c.y > nearY) { nearY = c.y; near = c; }
+                    if (rise <= P.maxJumpH() * 0.92 && c.y > bestY) { bestY = c.y; best = c; }
+                }
+                target = best || near;
+            }
+            game.input.left = false;
+            game.input.right = false;
+            if (target) {
+                var dx = P.wrapDelta(target.cx() - game.px);
+                if (dx > 3) game.input.right = true;
+                else if (dx < -3) game.input.left = true;
+            }
+            if (game.onGround) game.input.jumpPressed = true;
+            game.step(P.Fixed);
+        }
+    }
+
+    layout();
+    requestAnimationFrame(frame);
+})();
+
+</script>
+</body>
+</html>
